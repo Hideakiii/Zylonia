@@ -65,9 +65,10 @@ class Player(pygame.sprite.Sprite):
     def animate(self):
         now = pygame.time.get_ticks()
         if not self.jumping and not self.walking:
-            if now - self.last_update = now
-            self.current_frame = (self.current_frame + 1) % len(self.standing_frames)
-            self.image = self.standing_frames[self.current_frame]
+            if now - self.last_update > 100:
+                self.last_update = now
+                self.current_frame = (self.current_frame + 1) % len(self.standing_frames)
+                self.image = self.standing_frames[self.current_frame]
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h):
