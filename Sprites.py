@@ -66,14 +66,32 @@ class Player(pygame.sprite.Sprite):
         if self.pos.x < 50:
             self.pos.x = 50
 
-        #self.rect.center = (self.pos)
     def animate(self):
         now = pygame.time.get_ticks()
+        if self.vel.x !=0:
+            self.walking = True
+        else:
+            self.walking = False
+        if self.walking:
+            if now - self.last_update > 200:
+                self.last_update = now
+                self.current_frame = (self.current_frame + 1) % len(self.walk_frames_l)
+                bottom = self.rect.bottom
+                if self.vel.x > 0:
+                    self.image = self.walk_frames_r[self.current_frame]
+                else:
+                    self.image = self.walk_frames_l[self.current_frame]
+                self.rect = self.image.get_rect()
+                self.rect.bottom = bottom
+        
         if not self.jumping and not self.walking:
             if now - self.last_update > 300:
                 self.last_update = now
                 self.current_frame = (self.current_frame + 1) % len(self.standing_frames)
+                bottom = self.rect.bottom
                 self.image = self.standing_frames[self.current_frame]
+                self.rect = self.image.get_rect()
+                self.rect.bottom = bottom
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h):
