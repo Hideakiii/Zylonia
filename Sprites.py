@@ -22,15 +22,20 @@ class Player(pygame.sprite.Sprite):
     def load_images(self):
         self.standing_frames = [self.game.spritesheet.get_image(x, y,w ,h),
                                self.game.spritesheet.get_image(x ,y, w ,h)]
+        for frame in self.standing_frames:
+            frame.set.colorkey(black)
         self.walk_frames_r = [self.game.spritesheet.get_image(x ,y, w ,h),
                              self.game.spritesheet.get_image(x ,y, w ,h),
                              self.game.spritesheet.get_image(x ,y, w ,h),
                              self.game.spritesheet.get_image(x ,y, w ,h),
                              self.game.spritesheet.get_image(x ,y, w ,h),
                              self.game.spritesheet.get_image(x ,y, w ,h)]
+        for frame in self.standing_frames:
+            frame.set.colorkey(black)
         self.walking_frames_l = []
         for frame in self.walk_frames_r:
             self.walk_frames_l.append(pygame.transform.flip(frame ,True, False))
+            frame.set.colorkey(black)
         self.jump_frames = self.game.spritesheet.get_image(x,y,w,h)
 
     def jump(self):
@@ -65,7 +70,7 @@ class Player(pygame.sprite.Sprite):
     def animate(self):
         now = pygame.time.get_ticks()
         if not self.jumping and not self.walking:
-            if now - self.last_update > 100:
+            if now - self.last_update > 300:
                 self.last_update = now
                 self.current_frame = (self.current_frame + 1) % len(self.standing_frames)
                 self.image = self.standing_frames[self.current_frame]
