@@ -58,6 +58,8 @@ class Player(pygame.sprite.Sprite):
 
         self.acc.x += self.vel.x * player_friction  ## beschl. 0 += gesch. 0 * -0,12
         self.vel += self.acc                    ## gesch. 0 += beschl. 0
+        if abs(self.vel.x) < 0.5:
+            self.vel.x = 0
         self.pos += self.vel + 0.5 * self.acc   ## pos x,y += gesch. 0 + 0,5 * beschl. 0
         self.rect.midbottom = self.pos
 
