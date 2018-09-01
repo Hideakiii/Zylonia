@@ -4,6 +4,7 @@ import random
 import time
 from Settings import *
 from Sprites import *
+from os import path
 
 class Game:
     def __init__(self):
@@ -11,18 +12,31 @@ class Game:
         pygame.init()
         pygame.mixer.init()
 
-        self.game_display = pygame.display.set_mode((width, height))
-        pygame.display.set_caption(game_title)
+        self.game_display = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption(GAME_TITLE)
         self.clock = pygame.time.Clock()
         self.running = True
+        self.load_data()
+
+    def load_data(self):
+        # load high score
+        self.dir = path.dirname(__file__)
+        img_dir = path.join(self.dir, 'img')
+        with open(path.join(self.dir, HS_FILE), 'r') as f:
+            try:
+                self.highscore = int(f.read())
+            except:
+                self.highscore = 0
+        # load spritesheet image
+        self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
 
     def new_game(self):
         ## start a new game
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
         self.player = Player(100,250, game)            
-        self.p1 = Platform(0 ,height - 50 , width ,50)
-        self.p2 = Platform(width / 5 - 50 , height * 3 / 4, 100, 20)
+        self.p1 = Platform(0 ,HEIGHT - 50 , WIDTH ,50)
+        self.p2 = Platform(WIDTH / 5 - 50 , HEIGHT * 3 / 4, 100, 20)
         self.all_sprites.add(self.player) 
         for plat in platform_list:
             p = Platform(*plat)
@@ -35,7 +49,7 @@ class Game:
         ## game loop
         self.playing = True
         while self.playing:
-            self.clock.tick(fps)
+            self.clock.tick(FPS)
             self.events()
             self.update()
             self.draw()
@@ -57,10 +71,10 @@ class Game:
 
 
         ## if player reaches the side of the screen 
-        if self.player.rect.right >= width - 100:
+        if self.player.rect.right >= WIDTH - 100:
             self.player.pos.x = 50
             #for plat in self.platforms:
-                #if plat.rect.right >= width:
+                #if plat.rect.right >= WIDTH:
                     #plat.kill()
             #next_scene()
 
