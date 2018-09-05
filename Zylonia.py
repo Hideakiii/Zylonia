@@ -49,6 +49,7 @@ class Game:
         ## game loop
         self.playing = True
         while self.playing:
+            self.load_data()
             self.clock.tick(FPS)
             self.events()
             self.update()
@@ -116,4 +117,5 @@ while game.running :
     game.new_game()
     game.Gameover_Screen()
 
-    pygame.quit
+    pygame.quit()
+    quit()
