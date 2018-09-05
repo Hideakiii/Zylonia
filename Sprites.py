@@ -4,7 +4,7 @@ vector = pygame.math.Vector2
 
 class Spritesheet:
     # utility class for loading and parsing spritesheets
-    def __init__(self, filename):  
+    def __init__(self,filename):  ##filename        ##filename  
         self.spritesheet = pygame.image.load(filename).convert()
 
     def get_image(self, x, y, width, height):
@@ -14,20 +14,6 @@ class Spritesheet:
         image = pygame.transform.scale(image, (width // 2, height // 2))
         return image
 
-    def load_images(self):
-        self.standing_frames = [self.game.spritesheet.get_image(614, 1063, 120, 191),
-                                self.game.spritesheet.get_image(690, 406, 120, 201)]
-        for frame in self.standing_frames:
-            frame.set_colorkey(BLACK)
-        self.walk_frames_r = [self.game.spritesheet.get_image(678, 860, 120, 201),
-                              self.game.spritesheet.get_image(692, 1458, 120, 207)]
-        self.walk_frames_l = []
-        for frame in self.walk_frames_r:
-            frame.set_colorkey(BLACK)
-            self.walk_frames_l.append(pg.transform.flip(frame, True, False))
-        self.jump_frame = self.game.spritesheet.get_image(382, 763, 150, 181)
-        self.jump_frame.set_colorkey(BLACK)
-
 class Player(pygame.sprite.Sprite):
     def __init__(self,x,y,game):
         self.game = game
@@ -35,18 +21,29 @@ class Player(pygame.sprite.Sprite):
         self.jumping = False
         self.current_frame = 0
         self.last_update = 0
-    #    self.load_images()
+        self.load_images()
         pygame.sprite.Sprite.__init__(self)
-        #self.image = pygame.Surface((45,45))
-        #self.image.fill(light_red)
-        self.image = self.game.spritesheet.get_image(50, 200,60 ,200)
-        self.image.set.colorkey(black)
+        self.image = self.game.spritesheet.get_image(614, 1063,120 ,191).convert()
+        self.image.set_colorkey(black)
         self.image = self.standing_frames[0]
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2,HEIGHT / 2)
         self.pos = vector(x,y)
         self.vel = vector(0,0)
-        
+
+    def load_images(self):
+        self.standing_frames = [self.game.spritesheet.get_image(614, 1063, 120, 191),
+                                self.game.spritesheet.get_image(690, 406, 120, 201)]
+        for frame in self.standing_frames:
+            frame.set_colorkey(black)
+        self.walk_frames_r = [self.game.spritesheet.get_image(678, 860, 120, 201),
+                              self.game.spritesheet.get_image(692, 1458, 120, 207)]
+        self.walk_frames_l = []
+        for frame in self.walk_frames_r:
+            frame.set_colorkey(black)
+            self.walk_frames_l.append(pygame.transform.flip(frame, True, False))
+        self.jump_frame = self.game.spritesheet.get_image(382, 763, 150, 181)
+        self.jump_frame.set_colorkey(black)        
 
     def jump(self):
         ## only jump when standing on platform
@@ -78,7 +75,7 @@ class Player(pygame.sprite.Sprite):
 
         #self.rect.center = (self.pos)
     def animate(self):
-        now = pg.time.get_ticks()
+        now = pygame.time.get_ticks()
         if self.vel.x != 0:
             self.walking = True
         else:
