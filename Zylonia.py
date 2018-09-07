@@ -42,14 +42,12 @@ class Game:
             p = Platform(*plat)
             self.all_sprites.add(p)
             self.platforms.add(p)
-
         self.run()
 
     def run(self):
         ## game loop
         self.playing = True
         while self.playing:
-            self.load_data()
             self.clock.tick(FPS)
             self.events()
             self.update()
