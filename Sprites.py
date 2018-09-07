@@ -32,17 +32,21 @@ class Player(pygame.sprite.Sprite):
         self.vel = vector(0,0)
 
     def load_images(self):
-        self.standing_frames = [self.game.spritesheet.get_image(614, 1063, 120, 191),
-                                self.game.spritesheet.get_image(690, 406, 120, 201)]
+        self.standing_frames = [self.game.spritesheet.get_image(9, 10, 89, 177),
+                                self.game.spritesheet.get_image(111, 12, 89, 177)]
         for frame in self.standing_frames:
+            frame.set_colorkey(red)
+        self.walk_frames_l = [self.game.spritesheet.get_image(9, 10, 89, 177),
+                              self.game.spritesheet.get_image(111, 12, 89, 177),
+                              self.game.spritesheet.get_image(211, 9, 89, 177),
+                              self.game.spritesheet.get_image(316, 11, 89, 177),
+                              self.game.spritesheet.get_image(416, 12, 89, 177),
+                              self.game.spritesheet.get_image(515, 9, 89, 177)]
+        self.walk_frames_r = []
+        for frame in self.walk_frames_l:
             frame.set_colorkey(black)
-        self.walk_frames_r = [self.game.spritesheet.get_image(678, 860, 120, 201),
-                              self.game.spritesheet.get_image(692, 1458, 120, 207)]
-        self.walk_frames_l = []
-        for frame in self.walk_frames_r:
-            frame.set_colorkey(black)
-            self.walk_frames_l.append(pygame.transform.flip(frame, True, False))
-        self.jump_frame = self.game.spritesheet.get_image(382, 763, 150, 181)
+            self.walk_frames_r.append(pygame.transform.flip(frame, True, False))
+        self.jump_frame = self.game.spritesheet.get_image(416, 12, 89, 177)
         self.jump_frame.set_colorkey(black)        
 
     def jump(self):
@@ -68,6 +72,8 @@ class Player(pygame.sprite.Sprite):
         self.pos += self.vel + 0.5 * self.acc   ## pos x,y += gesch. 0 + 0,5 * beschl. 0
         self.rect.midbottom = self.pos
 
+        if abs(self.vel.x) < 0.2:
+            self.vel.x = 0
         if self.pos.x + 50 > WIDTH:
             self.pos.x = WIDTH - 50
         if self.pos.x < 50:
@@ -82,7 +88,7 @@ class Player(pygame.sprite.Sprite):
             self.walking = False
         # show walk animation
         if self.walking:
-            if now - self.last_update > 180:
+            if now - self.last_update > 140:
                 self.last_update = now
                 self.current_frame = (self.current_frame + 1) % len(self.walk_frames_l)
                 bottom = self.rect.bottom
