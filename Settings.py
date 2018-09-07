@@ -2,17 +2,19 @@
 ## Game settings
 
 WIDTH = 1280
-HEIGHT = 860
+HEIGHT = 720
 FPS = 60
 GAME_TITLE = "Zylonia"
 HS_FILE = "highscore.txt"
 #SPRITESHEET = "Charakters_v1.png"
-SPRITESHEET = "spritesheet_jumper.png"
+SPRITESHEET = "Charakter_v4.png"
 
 ## Platforms
 platform_list = [(WIDTH / 5 - 50 , HEIGHT * 3 / 4, 100, 20),
                  (0 ,HEIGHT - 50 , WIDTH ,50),
-                 (150 , HEIGHT - 300 , 100, 20)]
+                 (150 , HEIGHT - 300 , 100, 20),
+                 (400 , 350 , 150, 20),
+                 (600 , 300 , 100, 20)]
 
 ## Player Properties
 player_acc = 0.5
