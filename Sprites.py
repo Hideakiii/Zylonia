@@ -4,7 +4,7 @@ vector = pygame.math.Vector2
 
 class Spritesheet:
     # utility class for loading and parsing spritesheets
-    def __init__(self,filename):  ##filename        ##filename  
+    def __init__(self,filename): 
         self.spritesheet = pygame.image.load(filename).convert()
 
     def get_image(self, x, y, width, height):
@@ -35,7 +35,7 @@ class Player(pygame.sprite.Sprite):
         self.standing_frames = [self.game.spritesheet.get_image(9, 10, 89, 177),
                                 self.game.spritesheet.get_image(111, 12, 89, 177)]
         for frame in self.standing_frames:
-            frame.set_colorkey(red)
+            frame.set_colorkey(black)
         self.walk_frames_l = [self.game.spritesheet.get_image(9, 10, 89, 177),
                               self.game.spritesheet.get_image(111, 12, 89, 177),
                               self.game.spritesheet.get_image(211, 9, 89, 177),
@@ -79,7 +79,6 @@ class Player(pygame.sprite.Sprite):
         if self.pos.x < 50:
             self.pos.x = 50
 
-        #self.rect.center = (self.pos)
     def animate(self):
         now = pygame.time.get_ticks()
         if self.vel.x != 0:
@@ -116,3 +115,34 @@ class Platform(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+class Fly_Plat(pygame.sprite.Sprite):
+    def __init__(self,x ,y, w, h ,game):
+        self.game = game
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((w,h))
+        self.image.fill(dark_blue)
+        self.rect = self.image.get_rect()
+        self.start_pos = vector(x,y)
+        self.pos = vector(x,y)
+
+    def update(self):
+        self.acc = vector(0, FLYPLAT_GRAV)
+        self.pos = self.pos
+        self.vel = vector(0,0)
+        self.acc.y = FLYPLAT_ACC + FLYPLAT_GRAV            ## beschl. x 0 = 0,5
+
+        self.acc.y += self.vel.y * FLYPLAT_FRICTION  ## beschl. 0 += gesch. 0 * -0,12
+        self.vel += self.acc                    ## gesch. 0 += beschl. 0
+        self.pos += self.vel + 0.5 * self.acc   ## pos x,y += gesch. 0 + 0,5 * beschl. 0
+        self.rect.midbottom = self.pos
+
+        if self.pos.y > 630:
+            FLYPLAT_ACC *= -1
+                                                ### around here is an error ,FLYPLAT_ACC ,FLYPLAT_ etc ... referendet before assignment
+        print("pos y" ,self.pos.y)              ### UnboundLocalError ("local variable 'FFLYPLAT_ACC' referenced before assignment ',)
+        print("start pos" ,self.start_pos.y)    ### but i defined it in Settings.py ,like the variabels for the player
+        print("flyplat_acc" ,FLYPLAT_ACC)
+        print("friction" ,FLYPLAT_FRICTION)
+        print("gravity" ,FLYPLAT_GRAV)
+
