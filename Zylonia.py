@@ -19,7 +19,7 @@ class Game:
         self.load_data()
 
     def load_data(self):
-        # load high score
+        # load high score and other 
         self.dir = path.dirname(__file__)
         img_dir = path.join(self.dir, 'img')
         with open(path.join(self.dir, HS_FILE), 'r') as f:
@@ -35,8 +35,6 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
         self.player = Player(100,250, game)            
-        self.p1 = Platform(0 ,HEIGHT - 50 , WIDTH ,50)
-        self.p2 = Platform(WIDTH / 5 - 50 , HEIGHT * 3 / 4, 100, 20)
         self.all_sprites.add(self.player) 
         for plat in platform_list:
             p = Platform(*plat)
@@ -56,7 +54,7 @@ class Game:
     def update(self):
         ## game loop - update
         self.all_sprites.update()
-
+        
         if self.player.vel.y > 0:
             collide = pygame.sprite.spritecollide(self.player ,self.platforms ,False)
             if collide:
@@ -68,13 +66,23 @@ class Game:
                     self.player.pos.y = lowest.rect.top + 1
                     self.player.vel.y = 0
 
-
         ## if player reaches the side of the screen 
-        if self.player.rect.right >= WIDTH - 100:
-            self.player.pos.x = 50
-            #for plat in self.platforms:
-                #if plat.rect.right >= WIDTH:
-                    #plat.kill()
+        if self.player.rect.right >= WIDTH - 150:
+            # Display "E" button
+            self.keystate = pygame.key.get_pressed()
+            if self.keystate[pygame.K_e]:
+                self.player.pos = (50,500)
+                for plat in self.platforms:
+                    plat.kill()
+                for plat in platform_list_2:
+                    p = Platform(*plat)
+                    self.all_sprites.add(p)
+                    self.platforms.add(p)
+                for plat in Flyplat_list:
+                    p = Fly_Plat(*plat ,game)
+                    self.all_sprites.add(p)
+                    self.platforms.add(p)
+       
             #next_scene()
 
     def events(self):
@@ -99,7 +107,6 @@ class Game:
 
         pygame.display.flip()
 
-
     def Start_Screen(self):
         ## show game start screen
         pass
@@ -107,7 +114,6 @@ class Game:
     def Gameover_Screen(self):
         ## shoe game over screen
         pass
-
 
 game = Game()
 game.Start_Screen()
