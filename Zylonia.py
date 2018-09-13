@@ -19,14 +19,8 @@ class Game:
         self.load_data()
 
     def load_data(self):
-        # load high score and other 
         self.dir = path.dirname(__file__)
         img_dir = path.join(self.dir, 'img')
-        with open(path.join(self.dir, HS_FILE), 'r') as f:
-            try:
-                self.highscore = int(f.read())
-            except:
-                self.highscore = 0
         # load spritesheet image
         self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
 
@@ -37,7 +31,7 @@ class Game:
         self.player = Player(100,250, game)            
         self.all_sprites.add(self.player) 
         for plat in platform_list:
-            p = Platform(*plat)
+            p = Platform(*plat ,game)
             self.all_sprites.add(p)
             self.platforms.add(p)
         self.run()
@@ -75,7 +69,7 @@ class Game:
                 for plat in self.platforms:
                     plat.kill()
                 for plat in platform_list_2:
-                    p = Platform(*plat)
+                    p = Platform(*plat ,game)
                     self.all_sprites.add(p)
                     self.platforms.add(p)
                 for plat in Flyplat_list:
@@ -116,6 +110,7 @@ class Game:
         pass
 
 game = Game()
+player = Player(100,250,game)
 game.Start_Screen()
 while game.running :
     game.new_game()
