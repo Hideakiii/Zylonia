@@ -137,14 +137,14 @@ class Fly_Plat(pygame.sprite.Sprite):
         self.pos = vector(x,y)
 
     def update(self):
-        self.acc = vector(0, FLYPLAT_GRAV)
-        self.pos = self.pos
+        self.acc = vector(0, FLYPLAT_GRAV) ### hier ist immernoch der bug ,FLYPLAT_GRAV referendet before assignment ....
+        self.pos = self.pos                ### Mit den gleich definierten Variabeln vom Player funktioniert das ...
         self.vel = vector(0,0)
-        self.acc.y = FLYPLAT_ACC + FLYPLAT_GRAV            ## beschl. x 0 = 0,5
+        self.acc.y = FLYPLAT_ACC + FLYPLAT_GRAV   
 
-        self.acc.y += self.vel.y * FLYPLAT_FRICTION  ## beschl. 0 += gesch. 0 * -0,12
-        self.vel += self.acc                    ## gesch. 0 += beschl. 0
-        self.pos += self.vel + 0.5 * self.acc   ## pos x,y += gesch. 0 + 0,5 * beschl. 0
+        self.acc.y += self.vel.y * FLYPLAT_FRICTION 
+        self.vel += self.acc                    
+        self.pos += self.vel + 0.5 * self.acc 
         self.rect.midbottom = self.pos
 
         if self.pos.y > 630:
