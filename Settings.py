@@ -8,8 +8,8 @@ GAME_TITLE = "Zylonia"
 HS_FILE = "highscore.txt"
 SPRITESHEET = "Charakter_v4.png"
 
-## Flying platforms properties      ### Hier wurden alle verwendeten Variabeln von Fly_plat erstellt
-FLYPLAT_ACC = 0.5                   ### trotz dem gibt es mir den error : UnboundLocalError ("local variable 'FFLYPLAT_ACC' referenced before assignment ',)
+## Flying platforms properties
+FLYPLAT_ACC = 0.5
 FLYPLAT_GRAV = 0.4
 FLYPLAT_MOVE = 20
 FLYPLAT_FRICTION = -0.12
@@ -45,3 +45,4 @@ light_blue = (0,0,255)
 red = (255,0,0)
 light_red = (200,0,0)
 green = (0,255,0)
+
