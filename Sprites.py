@@ -107,9 +107,19 @@ class Player(pygame.sprite.Sprite):
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
 
-class Platform(pygame.sprite.Sprite):
-    def __init__(self, x, y, w, h):
+
+class Npc(pygame.sprite.Sprite):
+    def __init__(self ,x, y,w,h, game ,player):
         pygame.sprite.Sprite.__init__(self)
+        self.game = game
+        self.player = player
+        self.image = self.game.spritesheet.get_image(x,y,w,h).convert()
+
+
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, x, y, w, h ,game):
+        pygame.sprite.Sprite.__init__(self)
+        self.game = game
         self.image = pygame.Surface((w,h))
         self.image.fill(light_blue)
         self.rect = self.image.get_rect()
@@ -139,9 +149,8 @@ class Fly_Plat(pygame.sprite.Sprite):
 
         if self.pos.y > 630:
             FLYPLAT_ACC *= -1
-                                                ### around here is an error ,FLYPLAT_ACC ,FLYPLAT_ etc ... referendet before assignment
-        print("pos y" ,self.pos.y)              ### UnboundLocalError ("local variable 'FFLYPLAT_ACC' referenced before assignment ',)
-        print("start pos" ,self.start_pos.y)    ### but i defined it in Settings.py ,like the variabels for the player
+        print("pos y" ,self.pos.y)
+        print("start pos" ,self.start_pos.y)
         print("flyplat_acc" ,FLYPLAT_ACC)
         print("friction" ,FLYPLAT_FRICTION)
         print("gravity" ,FLYPLAT_GRAV)
