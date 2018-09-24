@@ -54,9 +54,9 @@ class Game:
             if collide:
                 lowest = collide[0]
                 for col in collide:
-                    if col.rect.bottom > lowest.rect.bottom:
+                    if col.rect.bottom > lowest.rect.centery:
                         lowest = col
-                if self.player.pos.y < lowest.rect.bottom:
+                if self.player.pos.y < lowest.rect.centery:
                     self.player.pos.y = lowest.rect.top + 1
                     self.player.vel.y = 0
 
@@ -116,5 +116,5 @@ while game.running :
     game.new_game()
     game.Gameover_Screen()
 
-    pygame.quit()
+    pygame.Quit()
     quit()
