@@ -7,7 +7,9 @@ FPS = 60
 GAME_TITLE = "Zylonia"
 HS_FILE = "highscore.txt"
 SPRITESHEET = "Sprites_v1.png"
-SHADOW_MASK = ""
+
+SHADOW_MASK = "Shadow_mask.png"
+SHADOW_RADIUS = (400 ,400)
 ## Flying platforms properties
 FLYPLAT_ACC = 0.5
 FLYPLAT_GRAV = 0.4
@@ -39,6 +41,7 @@ JUMP_POWER = 12
 white = (255,255,255)
 black = (0,0,0)
 grey = (15,15,15)
+light_grey = (25,25,25)
 dark_blue = (0,0,180)
 blue = (0,0,200)
 light_blue = (0,0,255)
