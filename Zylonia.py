@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 import time
+from Camera import *
 from Settings import *
 from Sprites import *
 from os import path
@@ -12,6 +13,7 @@ class Game:
         pygame.init()
         pygame.mixer.init()
 
+        self.camera = Camera()
         self.game_display = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(GAME_TITLE)
         self.clock = pygame.time.Clock()
@@ -23,7 +25,14 @@ class Game:
         img_dir = path.join(self.dir, 'img')
         # load spritesheet image
         self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
-    
+        ## shadow effect
+        self.fog = pygame.Surface((WIDTH,HEIGHT))
+        self.fog.fill(light_grey)
+        self.shadow_mask = pygame.image.load(path.join(img_dir, SHADOW_MASK)).convert_alpha()
+        self.shadow_mask = pygame.transform.scale(self.shadow_mask, SHADOW_RADIUS)
+        self.shadow_rect = self.shadow_mask.get_rect()
+
+            
 
     def new_game(self):
         ## start a new game
@@ -35,6 +44,7 @@ class Game:
             p = Platform(*plat ,game)
             self.all_sprites.add(p)
             self.platforms.add(p)
+        self.shadow = True     ### To toggle the shadow_mask on/off
         self.run()
 
     def run(self):
@@ -80,6 +90,11 @@ class Game:
        
             #next_scene()
 
+
+    def render_fog(self):   ### draf the shadowmask onto the player position
+        self.fog.fill(light_grey)
+
+
     def events(self):
         ## game loop - events
         ## event check 
@@ -99,6 +114,8 @@ class Game:
         ## game loop - draw
         self.game_display.fill(grey)
         self.all_sprites.draw(self.game_display)
+        if self.shadow:
+            self.render_fog()
 
         pygame.display.flip()
 
