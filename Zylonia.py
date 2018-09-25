@@ -116,5 +116,5 @@ while game.running :
     game.new_game()
     game.Gameover_Screen()
 
-    pygame.Quit()
+    pygame.quit()
     quit()
