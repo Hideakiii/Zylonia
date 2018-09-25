@@ -6,8 +6,8 @@ HEIGHT = 720
 FPS = 60
 GAME_TITLE = "Zylonia"
 HS_FILE = "highscore.txt"
-SPRITESHEET = "Charakter_v4.png"
-
+SPRITESHEET = "Sprites_v1.png"
+SHADOW_MASK = ""
 ## Flying platforms properties
 FLYPLAT_ACC = 0.5
 FLYPLAT_GRAV = 0.4

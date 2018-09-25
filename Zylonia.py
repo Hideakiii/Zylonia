@@ -23,6 +23,7 @@ class Game:
         img_dir = path.join(self.dir, 'img')
         # load spritesheet image
         self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
+    
 
     def new_game(self):
         ## start a new game
@@ -54,7 +55,7 @@ class Game:
             if collide:
                 lowest = collide[0]
                 for col in collide:
-                    if col.rect.bottom > lowest.rect.bottom:
+                    if col.rect.bottom > lowest.rect.centery:
                         lowest = col
                 if self.player.pos.y < lowest.rect.bottom:
                     self.player.pos.y = lowest.rect.top + 1
