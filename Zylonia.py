@@ -23,6 +23,7 @@ class Game:
         img_dir = path.join(self.dir, 'img')
         # load spritesheet image
         self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
+    
 
     def new_game(self):
         ## start a new game
