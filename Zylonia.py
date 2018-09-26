@@ -12,8 +12,7 @@ class Game:
         ## initialize game window,etc
         pygame.init()
         pygame.mixer.init()
-
-        self.camera = Camera()
+        
         self.game_display = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(GAME_TITLE)
         self.clock = pygame.time.Clock()
