@@ -14,6 +14,9 @@ class Game:
 
         self.game_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
         pygame.display.set_caption(Settings.GAME_TITLE)
+
+        self.game_display = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption(GAME_TITLE)
         self.clock = pygame.time.Clock()
         self.running = True
         self.load_data()
