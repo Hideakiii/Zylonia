@@ -1,4 +1,4 @@
-from Settings import *
+import Settings
 import pygame
 vector = pygame.math.Vector2
 
@@ -24,10 +24,10 @@ class Player(pygame.sprite.Sprite):
         self.load_images()
         pygame.sprite.Sprite.__init__(self)
         self.image = self.game.spritesheet.get_image(614, 1063,120 ,191).convert()
-        self.image.set_colorkey(black)
+        self.image.set_colorkey(Settings.black)
         self.image = self.standing_frames[0]
         self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH / 2,HEIGHT / 2)
+        self.rect.center = (Settings.WIDTH / 2,Settings.HEIGHT / 2)
         self.pos = vector(x,y)
         self.vel = vector(0,0)
 
@@ -35,7 +35,7 @@ class Player(pygame.sprite.Sprite):
         self.standing_frames = [self.game.spritesheet.get_image(9, 10, 89, 177),
                                 self.game.spritesheet.get_image(111, 12, 89, 177)]
         for frame in self.standing_frames:
-            frame.set_colorkey(black)
+            frame.set_colorkey(Settings.black)
         self.walk_frames_l = [self.game.spritesheet.get_image(9, 10, 89, 177),
                               self.game.spritesheet.get_image(111, 12, 89, 177),
                               self.game.spritesheet.get_image(211, 9, 89, 177),
@@ -44,10 +44,10 @@ class Player(pygame.sprite.Sprite):
                               self.game.spritesheet.get_image(515, 9, 89, 177)]
         self.walk_frames_r = []
         for frame in self.walk_frames_l:
-            frame.set_colorkey(black)
+            frame.set_colorkey(Settings.black)
             self.walk_frames_r.append(pygame.transform.flip(frame, True, False))
         self.jump_frame = self.game.spritesheet.get_image(416, 12, 89, 177)
-        self.jump_frame.set_colorkey(black)        
+        self.jump_frame.set_colorkey(Settings.black)        
 
     def jump(self):
         ## only jump when standing on platform
@@ -55,27 +55,27 @@ class Player(pygame.sprite.Sprite):
         collide = pygame.sprite.spritecollide(self, self.game.platforms, False)
         self.rect.x -= 1
         if collide:
-            self.vel.y = -JUMP_POWER
+            self.vel.y = -Settings.JUMP_POWER
 
 
     def update(self):
         self.animate()
-        self.acc = vector(0, gravity)
+        self.acc = vector(0, Settings.gravity)
         self.keystate = pygame.key.get_pressed()
         if self.keystate[pygame.K_a]:
-            self.acc.x = -player_acc
+            self.acc.x = -Settings.player_acc
         if self.keystate[pygame.K_d]:
-            self.acc.x = player_acc             ## beschl. x 0 = 0,5
+            self.acc.x = Settings.player_acc             ## beschl. x 0 = 0,5
 
-        self.acc.x += self.vel.x * player_friction  ## beschl. 0 += gesch. 0 * -0,12
+        self.acc.x += self.vel.x * Settings.player_friction  ## beschl. 0 += gesch. 0 * -0,12
         self.vel += self.acc                    ## gesch. 0 += beschl. 0
         self.pos += self.vel + 0.5 * self.acc   ## pos x,y += gesch. 0 + 0,5 * beschl. 0
         self.rect.midbottom = self.pos
 
         if abs(self.vel.x) < 0.2:
             self.vel.x = 0
-        if self.pos.x + 50 > WIDTH:
-            self.pos.x = WIDTH - 50
+        if self.pos.x + 50 > Settings.WIDTH:
+            self.pos.x = Settings.WIDTH - 50
         if self.pos.x < 50:
             self.pos.x = 50
 
@@ -121,7 +121,7 @@ class Platform(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.game = game
         self.image = pygame.Surface((w,h))
-        self.image.fill(light_blue)
+        self.image.fill(Settings.light_blue)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -131,27 +131,21 @@ class Fly_Plat(pygame.sprite.Sprite):
         self.game = game
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((w,h))
-        self.image.fill(dark_blue)
+        self.image.fill(Settings.dark_blue)
         self.rect = self.image.get_rect()
         self.start_pos = vector(x,y)
         self.pos = vector(x,y)
 
     def update(self):
-        self.acc = vector(0, FLYPLAT_GRAV) ### hier ist immernoch der bug ,FLYPLAT_GRAV referendet before assignment ....
+        self.acc = vector(0, Settings.FLYPLAT_GRAV) ### hier ist immernoch der bug ,FLYPLAT_GRAV referendet before assignment ....
         self.pos = self.pos                ### Mit den gleich definierten Variabeln vom Player funktioniert das ...
         self.vel = vector(0,0)
-        self.acc.y = FLYPLAT_ACC + FLYPLAT_GRAV   
+        self.acc.y = Settings.FLYPLAT_ACC + Settings.FLYPLAT_GRAV   
 
-        self.acc.y += self.vel.y * FLYPLAT_FRICTION 
+        self.acc.y += self.vel.y * Settings.FLYPLAT_FRICTION 
         self.vel += self.acc                    
         self.pos += self.vel + 0.5 * self.acc 
         self.rect.midbottom = self.pos
 
         if self.pos.y > 630:
-            FLYPLAT_ACC *= -1
-        print("pos y" ,self.pos.y)
-        print("start pos" ,self.start_pos.y)
-        print("flyplat_acc" ,FLYPLAT_ACC)
-        print("friction" ,FLYPLAT_FRICTION)
-        print("gravity" ,FLYPLAT_GRAV)
-
+            Settings.FLYPLAT_ACC *= -1

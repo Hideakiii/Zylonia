@@ -9,7 +9,7 @@ HS_FILE = "highscore.txt"
 SPRITESHEET = "Sprites_v1.png"
 
 SHADOW_MASK = "Shadow_mask.png"
-SHADOW_RADIUS = (400 ,400)
+SHADOW_RADIUS = (700 ,700)
 ## Flying platforms properties
 FLYPLAT_ACC = 0.5
 FLYPLAT_GRAV = 0.4
