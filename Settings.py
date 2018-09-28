@@ -23,8 +23,6 @@ platform_list_2 = [(0 ,HEIGHT - 50 , WIDTH ,50),
                     (290 , 390 , 210 , 20)]
 Flyplat_list = [
                     (500 , 600 , 70 , 20)]
-                    #(450 , 300 , 350 , 20),
-                    #(300 , 400 , 220 , 20)]
 
 ## Player Properties
 player_acc = 0.5
@@ -48,4 +46,3 @@ red = (200,0,0)
 light_red = (255,0,0)
 green = (0,200,0)
 light_green = (0,255,0)
-
