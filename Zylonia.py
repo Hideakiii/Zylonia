@@ -15,8 +15,8 @@ class Game:
         self.game_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
         pygame.display.set_caption(Settings.GAME_TITLE)
 
-        self.game_display = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption(GAME_TITLE)
+        self.game_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
+        pygame.display.set_caption(Settings.GAME_TITLE)
         self.clock = pygame.time.Clock()
         self.running = True
         self.load_data()
@@ -41,11 +41,11 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
         self.player = Player(100,250, game)            
-        self.all_sprites.add(self.player) 
         for plat in Settings.platform_list:
             p = Platform(*plat ,game)
             self.all_sprites.add(p)
             self.platforms.add(p)
+        self.all_sprites.add(self.player) 
         self.shadow = True     ### To toggle the shadow_mask on/off
         self.run()
 

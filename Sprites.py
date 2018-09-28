@@ -1,5 +1,7 @@
 import Settings
 import pygame
+import time
+import math
 vector = pygame.math.Vector2
 
 class Spritesheet:
@@ -137,15 +139,5 @@ class Fly_Plat(pygame.sprite.Sprite):
         self.pos = vector(x,y)
 
     def update(self):
-        self.acc = vector(0, Settings.FLYPLAT_GRAV) ### hier ist immernoch der bug ,FLYPLAT_GRAV referendet before assignment ....
-        self.pos = self.pos                ### Mit den gleich definierten Variabeln vom Player funktioniert das ...
-        self.vel = vector(0,0)
-        self.acc.y = Settings.FLYPLAT_ACC + Settings.FLYPLAT_GRAV   
-
-        self.acc.y += self.vel.y * Settings.FLYPLAT_FRICTION 
-        self.vel += self.acc                    
-        self.pos += self.vel + 0.5 * self.acc 
+        self.pos.y = self.pos.y + math.sin(time.time() * Settings.FLYPLAT_FREQUENZY) * Settings.FLYPLAT_AMPLITUDE
         self.rect.midbottom = self.pos
-
-        if self.pos.y > 630:
-            Settings.FLYPLAT_ACC *= -1
