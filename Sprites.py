@@ -53,9 +53,9 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         ## only jump when standing on platform
-        self.rect.x += 1
+        self.rect.x += 2
         collide = pygame.sprite.spritecollide(self, self.game.platforms, False)
-        self.rect.x -= 1
+        self.rect.x -= 2
         if collide:
             self.vel.y = -Settings.JUMP_POWER
 
@@ -129,11 +129,11 @@ class Platform(pygame.sprite.Sprite):
         self.rect.y = y
 
 class Fly_Plat(pygame.sprite.Sprite):
-    def __init__(self,x ,y, w, h ,game):
+    def __init__(self,x ,y,game):
         self.game = game
+        self.load_images(game)
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((w,h))
-        self.image.fill(Settings.dark_blue)
+        self.image = self.Flyplat_list[0]
         self.rect = self.image.get_rect()
         self.start_pos = vector(x,y)
         self.pos = vector(x,y)
@@ -141,3 +141,9 @@ class Fly_Plat(pygame.sprite.Sprite):
     def update(self):
         self.pos.y = self.pos.y + math.sin(time.time() * Settings.FLYPLAT_FREQUENZY) * Settings.FLYPLAT_AMPLITUDE
         self.rect.midbottom = self.pos
+
+    def load_images(self,game):
+        self.Flyplat_list = [self.game.platsheet.get_image(26,39,362,189),
+                            self.game.platsheet.get_image(421,45,251,79)]
+        for plat in self.Flyplat_list:
+            plat.set_colorkey(Settings.white)

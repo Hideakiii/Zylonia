@@ -23,7 +23,7 @@ platform_list_2 = [(0 ,HEIGHT - 50 , WIDTH ,50),
                     (470 , 320 , 370 , 20),
                     (290 , 390 , 210 , 20)]
 Flyplat_list = [
-                    (500 , 600 , 70 , 20)]
+                    (500 , 600)]
 
 ## Player Properties
 player_acc = 0.5
@@ -33,7 +33,7 @@ JUMP_POWER = 12
 ## Flying platforms properties
 
 FLYPLAT_FREQUENZY = 1
-FLYPLAT_AMPLITUDE = 2
+FLYPLAT_AMPLITUDE = 1
 
 ## Colors
 white = (255,255,255)
