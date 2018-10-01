@@ -5,8 +5,9 @@ WIDTH = 1280
 HEIGHT = 720
 FPS = 60
 GAME_TITLE = "Zylonia"
-HS_FILE = "highscore.txt"
+
 SPRITESHEET = "Sprites_v1.png"
+PLATSHEET = "Flyplatforms_v2.png"
 
 SHADOW_MASK = "Shadow_mask.png"
 SHADOW_RADIUS = (700 ,700)

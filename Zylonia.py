@@ -26,6 +26,7 @@ class Game:
         img_dir = path.join(self.dir, 'img')
         # load spritesheet image
         self.spritesheet = Spritesheet(path.join(img_dir,Settings.SPRITESHEET))
+        self.platsheet = Spritesheet(path.join(img_dir,Settings.PLATSHEET))
         ## shadow effect
         self.fog = pygame.Surface((Settings.WIDTH ,Settings.HEIGHT))
         self.fog.fill(Settings.light_grey)
