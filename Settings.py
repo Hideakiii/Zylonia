@@ -5,7 +5,7 @@ WIDTH = 1280
 HEIGHT = 720
 FPS = 60
 GAME_TITLE = "Zylonia"
-
+## images
 SPRITESHEET = "Sprites_v1.png"
 PLATSHEET = "Flyplatforms_v2.png"
 
@@ -13,15 +13,20 @@ SHADOW_MASK = "Shadow_mask.png"
 SHADOW_RADIUS = (700 ,700)
 
 ## Platforms
-platform_list = [(WIDTH / 5 - 50 , HEIGHT * 3 / 4, 100, 20),
-                 (0 ,HEIGHT - 50 , WIDTH ,50),
-                 (150 , HEIGHT - 300 , 100, 20),
-                 (400 , 350 , 150, 20),
-                 (600 , 300 , 100, 20)]
-platform_list_2 = [(0 ,HEIGHT - 50 , WIDTH ,50),
-                    (20 , 510 , 250 , 20),
-                    (470 , 320 , 370 , 20),
-                    (290 , 390 , 210 , 20)]
+platform_list = [(WIDTH / 5 - 50 , HEIGHT * 3 / 4),
+                 (0 ,HEIGHT - 50),
+                 (100 ,HEIGHT - 50),
+                 (200 ,HEIGHT - 50),
+                 (150 , HEIGHT - 300),
+                 (400 , 350),
+                 (600 , 300)]
+platform_list_2 = [(0 ,HEIGHT - 50),
+                    (100 ,HEIGHT - 50),
+                    (200 ,HEIGHT - 50),
+                    (300 ,HEIGHT - 50),
+                    (20 , 510 ),
+                    (470 , 320 ),
+                    (290 , 390)]
 Flyplat_list = [
                     (500 , 600)]
 

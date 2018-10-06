@@ -13,9 +13,8 @@ class Game:
         pygame.mixer.init()
 
         self.game_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
-        pygame.display.set_caption(Settings.GAME_TITLE)
-
-        self.game_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
+        self.back_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
+        self.front_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
         pygame.display.set_caption(Settings.GAME_TITLE)
         self.clock = pygame.time.Clock()
         self.running = True
@@ -41,7 +40,9 @@ class Game:
         ## start a new game
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
-        self.player = Player(100,250, game)            
+        self.player = Player(100,250, game)    
+        self.P_group = pygame.sprite.Group()
+        self.P_group.add(self.player)     
         for plat in Settings.platform_list:
             p = Platform(*plat ,game)
             self.all_sprites.add(p)
@@ -120,8 +121,9 @@ class Game:
 
     def draw(self):
         ## game loop - draw
-        self.game_display.fill(Settings.grey)
+        self.back_display.fill(Settings.grey)
         self.all_sprites.draw(self.game_display)
+        self.P_group.draw(self.front_display)
         if self.shadow:
             self.render_fog()
 

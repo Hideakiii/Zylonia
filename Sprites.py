@@ -2,6 +2,7 @@ import Settings
 import pygame
 import time
 import math
+import random
 vector = pygame.math.Vector2
 
 class Spritesheet:
@@ -119,14 +120,19 @@ class Npc(pygame.sprite.Sprite):
 
 
 class Platform(pygame.sprite.Sprite):
-    def __init__(self, x, y, w, h ,game):
+    def __init__(self, x, y,game):
         pygame.sprite.Sprite.__init__(self)
         self.game = game
-        self.image = pygame.Surface((w,h))
-        self.image.fill(Settings.light_blue)
+        self.load_images(game)
+        self.image = self.Plat_list[1]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+    def load_images(self,game):
+        self.Plat_list = [self.game.platsheet.get_image(26,39,362,189),
+                            self.game.platsheet.get_image(421,45,251,79)]
+        for plat in self.Plat_list:
+            plat.set_colorkey(Settings.white)
 
 class Fly_Plat(pygame.sprite.Sprite):
     def __init__(self,x ,y,game):
