@@ -132,7 +132,7 @@ class Platform(pygame.sprite.Sprite):
         self.Plat_list = [self.game.platsheet.get_image(26,39,362,189),
                             self.game.platsheet.get_image(421,45,251,79)]
         for plat in self.Plat_list:
-            plat.set_colorkey(Settings.white)
+            plat.set_colorkey(Settings.white) #white
 
 class Fly_Plat(pygame.sprite.Sprite):
     def __init__(self,x ,y,game):
@@ -149,7 +149,6 @@ class Fly_Plat(pygame.sprite.Sprite):
         self.rect.midbottom = self.pos
 
     def load_images(self,game):
-        self.Flyplat_list = [self.game.platsheet.get_image(26,39,362,189),
-                            self.game.platsheet.get_image(421,45,251,79)]
+        self.Flyplat_list = [self.game.platsheet.get_image(26,39,362,189)]
         for plat in self.Flyplat_list:
             plat.set_colorkey(Settings.white)

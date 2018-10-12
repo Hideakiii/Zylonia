@@ -102,7 +102,7 @@ class Game:
         self.fog.fill(Settings.light_grey)
         self.shadow_rect.center = self.player.rect.center
         self.fog.blit(self.shadow_mask ,self.shadow_rect)
-        self.game_display.blit(self.fog, (0,0) ,special_flags=pygame.BLEND_MULT)
+        self.front_display.blit(self.fog, (0,0) ,special_flags=pygame.BLEND_MULT)
 
     def events(self):
         ## game loop - events
@@ -130,7 +130,7 @@ class Game:
         if self.shadow:
             self.render_fog()
 
-        pygame.display.flip()
+        pygame.display.update()
 
     def Start_Screen(self):
         ## show game start screen

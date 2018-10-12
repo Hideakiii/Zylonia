@@ -15,7 +15,7 @@ SHADOW_RADIUS = (700 ,700)
 ## Platforms
 def plat_px():
     p_x = 0
-    for p_x in range(1000):
+    for p_x in range(10):
         p_x += 100
         print(p_x)
         return p_x
