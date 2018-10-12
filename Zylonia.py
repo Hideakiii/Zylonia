@@ -12,6 +12,7 @@ class Game:
         pygame.init()
         pygame.mixer.init()
 
+        Settings.plat_px()
         self.game_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
         self.back_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
         self.front_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
@@ -42,12 +43,13 @@ class Game:
         self.platforms = pygame.sprite.Group()
         self.player = Player(100,250, game)    
         self.P_group = pygame.sprite.Group()
+        #self.all_sprites.add(self.player)
         self.P_group.add(self.player)     
         for plat in Settings.platform_list:
             p = Platform(*plat ,game)
             self.all_sprites.add(p)
             self.platforms.add(p)
-        self.all_sprites.add(self.player) 
+        #self.all_sprites.add(self.player)    wird sonst doppelt gezeichnet
         self.shadow = True     ### To toggle the shadow_mask on/off
         self.run()
 
@@ -63,6 +65,7 @@ class Game:
     def update(self):
         ## game loop - update
         self.all_sprites.update()
+        self.P_group.update()
         
         if self.player.vel.y > 0:
             collide = pygame.sprite.spritecollide(self.player ,self.platforms ,False)

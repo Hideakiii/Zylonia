@@ -13,6 +13,13 @@ SHADOW_MASK = "Shadow_mask.png"
 SHADOW_RADIUS = (700 ,700)
 
 ## Platforms
+def plat_px():
+    p_x = 0
+    for p_x in range(1000):
+        p_x += 100
+        print(p_x)
+        return p_x
+        
 platform_list = [(WIDTH / 5 - 50 , HEIGHT * 3 / 4),
                  (0 ,HEIGHT - 50),
                  (100 ,HEIGHT - 50),
