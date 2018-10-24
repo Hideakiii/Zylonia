@@ -8,7 +8,7 @@ vector = pygame.math.Vector2
 class Spritesheet:
     # utility class for loading and parsing spritesheets
     def __init__(self,filename): 
-        self.spritesheet = pygame.image.load(filename).convert()
+        self.spritesheet = pygame.image.load(filename).convert_alpha()
 
     def get_image(self, x, y, width, height):
         # grab an image out of a larger spritesheet
@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
         self.last_update = 0
         self.load_images()
         pygame.sprite.Sprite.__init__(self)
-        self.image = self.game.spritesheet.get_image(614, 1063,120 ,191).convert()
+        self.image = self.game.spritesheet.get_image(614, 1063,120 ,191).convert_alpha()
         self.image.set_colorkey(Settings.black)
         self.image = self.standing_frames[0]
         self.rect = self.image.get_rect()
@@ -112,15 +112,6 @@ class Player(pygame.sprite.Sprite):
                 self.rect.bottom = bottom
                 self.rect.left = left
 
-
-class Npc(pygame.sprite.Sprite):
-    def __init__(self ,x, y,w,h, game ,player):
-        pygame.sprite.Sprite.__init__(self)
-        self.game = game
-        self.player = player
-        self.image = self.game.spritesheet.get_image(x,y,w,h).convert()
-
-
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y,game):
         pygame.sprite.Sprite.__init__(self)
@@ -134,7 +125,7 @@ class Platform(pygame.sprite.Sprite):
         self.Plat_list = [self.game.platsheet.get_image(26,39,362,189),
                             self.game.platsheet.get_image(421,45,251,79)]
         for plat in self.Plat_list:
-            plat.set_colorkey(Settings.white)
+            plat.set_colorkey(Settings.black)
 
 class Fly_Plat(pygame.sprite.Sprite):
     def __init__(self,x ,y,game):
@@ -154,4 +145,4 @@ class Fly_Plat(pygame.sprite.Sprite):
         self.Flyplat_list = [self.game.platsheet.get_image(26,39,362,189),
                             self.game.platsheet.get_image(421,45,251,79)]
         for plat in self.Flyplat_list:
-            plat.set_colorkey(Settings.white)
+            plat.set_colorkey(Settings.black)
