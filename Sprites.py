@@ -111,6 +111,18 @@ class Player(pygame.sprite.Sprite):
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
                 self.rect.left = left
+<<<<<<< HEAD
+=======
+
+
+class Npc(pygame.sprite.Sprite):
+    def __init__(self ,x, y,w,h, game ,player):
+        pygame.sprite.Sprite.__init__(self)
+        self.game = game
+        self.player = player
+        self.image = self.game.spritesheet.get_image(x,y,w,h).convert()
+
+>>>>>>> 08801e5a231796506229f2a8e6cb81efc756ab22
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y,game):
