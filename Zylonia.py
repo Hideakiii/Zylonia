@@ -12,7 +12,6 @@ class Game:
         pygame.init()
         pygame.mixer.init()
 
-        Settings.plat_px()
         self.game_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
         self.back_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
         self.front_display = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
@@ -43,13 +42,12 @@ class Game:
         self.platforms = pygame.sprite.Group()
         self.player = Player(100,250, game)    
         self.P_group = pygame.sprite.Group()
-        #self.all_sprites.add(self.player)
         self.P_group.add(self.player)     
         for plat in Settings.platform_list:
             p = Platform(*plat ,game)
             self.all_sprites.add(p)
             self.platforms.add(p)
-        #self.all_sprites.add(self.player)    wird sonst doppelt gezeichnet
+        self.all_sprites.add(self.player) 
         self.shadow = True     ### To toggle the shadow_mask on/off
         self.run()
 
@@ -65,7 +63,6 @@ class Game:
     def update(self):
         ## game loop - update
         self.all_sprites.update()
-        self.P_group.update()
         
         if self.player.vel.y > 0:
             collide = pygame.sprite.spritecollide(self.player ,self.platforms ,False)
@@ -74,8 +71,8 @@ class Game:
                 for col in collide:
                     if col.rect.bottom > lowest.rect.centery:
                         lowest = col
-                if self.player.pos.y < lowest.rect.bottom:
-                    self.player.pos.y = lowest.rect.top + 1
+                if self.player.rect.bottom < lowest.rect.bottom:
+                    self.player.rect.bottom = lowest.rect.top + 1
                     self.player.vel.y = 0
 
         ## if player reaches the side of the screen 
@@ -83,7 +80,7 @@ class Game:
             # Display "E" button
             self.keystate = pygame.key.get_pressed()
             if self.keystate[pygame.K_e]:
-                self.player.pos = (50,500)
+                self.player.rect.center = (50,500)
                 for plat in self.platforms:
                     plat.kill()
                 for plat in Settings.platform_list_2:
@@ -102,7 +99,7 @@ class Game:
         self.fog.fill(Settings.light_grey)
         self.shadow_rect.center = self.player.rect.center
         self.fog.blit(self.shadow_mask ,self.shadow_rect)
-        self.front_display.blit(self.fog, (0,0) ,special_flags=pygame.BLEND_MULT)
+        self.game_display.blit(self.fog, (0,0) ,special_flags=pygame.BLEND_MULT)
 
     def events(self):
         ## game loop - events
@@ -130,7 +127,7 @@ class Game:
         if self.shadow:
             self.render_fog()
 
-        pygame.display.update()
+        pygame.display.flip()
 
     def Start_Screen(self):
         ## show game start screen

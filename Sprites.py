@@ -30,8 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.image.set_colorkey(Settings.black)
         self.image = self.standing_frames[0]
         self.rect = self.image.get_rect()
-        self.rect.center = (Settings.WIDTH / 2,Settings.HEIGHT / 2)
-        self.pos = vector(x,y)
+        self.rect.center = (x,y)
         self.vel = vector(0,0)
 
     def load_images(self):
@@ -72,15 +71,14 @@ class Player(pygame.sprite.Sprite):
 
         self.acc.x += self.vel.x * Settings.player_friction  ## beschl. 0 += gesch. 0 * -0,12
         self.vel += self.acc                    ## gesch. 0 += beschl. 0
-        self.pos += self.vel + 0.5 * self.acc   ## pos x,y += gesch. 0 + 0,5 * beschl. 0
-        self.rect.midbottom = self.pos
+        self.rect.move_ip(self.vel)
 
         if abs(self.vel.x) < 0.2:
             self.vel.x = 0
-        if self.pos.x + 50 > Settings.WIDTH:
-            self.pos.x = Settings.WIDTH - 50
-        if self.pos.x < 50:
-            self.pos.x = 50
+        if self.rect.x + 50 > Settings.WIDTH:
+            self.rect.x = Settings.WIDTH - 50
+        if self.rect.x < 50:
+            self.rect.x = 50
 
     def animate(self):
         now = pygame.time.get_ticks()
@@ -94,21 +92,25 @@ class Player(pygame.sprite.Sprite):
                 self.last_update = now
                 self.current_frame = (self.current_frame + 1) % len(self.walk_frames_l)
                 bottom = self.rect.bottom
+                left = self.rect.left
                 if self.vel.x > 0:
                     self.image = self.walk_frames_r[self.current_frame]
                 else:
                     self.image = self.walk_frames_l[self.current_frame]
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
+                self.rect.left = left
         # show idle animation
         if not self.jumping and not self.walking:
             if now - self.last_update > 350:
                 self.last_update = now
                 self.current_frame = (self.current_frame + 1) % len(self.standing_frames)
                 bottom = self.rect.bottom
+                left = self.rect.left
                 self.image = self.standing_frames[self.current_frame]
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
+                self.rect.left = left
 
 
 class Npc(pygame.sprite.Sprite):
@@ -132,7 +134,7 @@ class Platform(pygame.sprite.Sprite):
         self.Plat_list = [self.game.platsheet.get_image(26,39,362,189),
                             self.game.platsheet.get_image(421,45,251,79)]
         for plat in self.Plat_list:
-            plat.set_colorkey(Settings.white) #white
+            plat.set_colorkey(Settings.white)
 
 class Fly_Plat(pygame.sprite.Sprite):
     def __init__(self,x ,y,game):
@@ -149,6 +151,7 @@ class Fly_Plat(pygame.sprite.Sprite):
         self.rect.midbottom = self.pos
 
     def load_images(self,game):
-        self.Flyplat_list = [self.game.platsheet.get_image(26,39,362,189)]
+        self.Flyplat_list = [self.game.platsheet.get_image(26,39,362,189),
+                            self.game.platsheet.get_image(421,45,251,79)]
         for plat in self.Flyplat_list:
             plat.set_colorkey(Settings.white)
