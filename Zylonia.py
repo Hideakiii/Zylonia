@@ -71,8 +71,8 @@ class Game:
                 for col in collide:
                     if col.rect.bottom > lowest.rect.centery:
                         lowest = col
-                if self.player.pos.y < lowest.rect.bottom:
-                    self.player.pos.y = lowest.rect.top + 1
+                if self.player.rect.bottom < lowest.rect.bottom:
+                    self.player.rect.bottom = lowest.rect.top + 1
                     self.player.vel.y = 0
 
         ## if player reaches the side of the screen 
