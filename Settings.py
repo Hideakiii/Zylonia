@@ -45,7 +45,7 @@ Flyplat_list = [
 player_acc = 0.5
 player_friction = -0.12
 gravity = 0.5
-JUMP_POWER = 9
+JUMP_POWER = 8
 ## Flying platforms properties
 
 FLYPLAT_FREQUENZY = 1
