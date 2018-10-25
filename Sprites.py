@@ -32,6 +32,9 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
         self.vel = vector(0,0)
+        self.clock = pygame.time.Clock()
+        self.milliseconds = self.clock.tick(Settings.FPS)  # milliseconds passed since last frame
+        self.seconds = self.milliseconds / 10.0 # seconds passed since last frame (float)
 
     def load_images(self):
         self.standing_frames = [self.game.spritesheet.get_image(9, 10, 89, 177),
@@ -57,7 +60,7 @@ class Player(pygame.sprite.Sprite):
         collide = pygame.sprite.spritecollide(self, self.game.platforms, False)
         self.rect.x -= 2
         if collide:
-            self.vel.y = -Settings.JUMP_POWER
+            self.vel.y = -Settings.JUMP_POWER * self.seconds
 
 
     def update(self):
@@ -65,9 +68,9 @@ class Player(pygame.sprite.Sprite):
         self.acc = vector(0, Settings.gravity)
         self.keystate = pygame.key.get_pressed()
         if self.keystate[pygame.K_a]:
-            self.acc.x = -Settings.player_acc
+            self.acc.x += -Settings.player_acc * self.seconds
         if self.keystate[pygame.K_d]:
-            self.acc.x = Settings.player_acc             ## beschl. x 0 = 0,5
+            self.acc.x += Settings.player_acc * self.seconds             ## beschl. x 0 = 0,5
 
         self.acc.x += self.vel.x * Settings.player_friction  ## beschl. 0 += gesch. 0 * -0,12
         self.vel += self.acc                    ## gesch. 0 += beschl. 0

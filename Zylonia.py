@@ -76,7 +76,7 @@ class Game:
                     self.player.vel.y = 0
 
         ## if player reaches the side of the screen 
-        if self.player.rect.right >= Settings.WIDTH - 150:
+        if self.player.rect.right >= Settings.WIDTH - 200:
             # Display "E" button
             self.keystate = pygame.key.get_pressed()
             if self.keystate[pygame.K_e]:
@@ -96,7 +96,7 @@ class Game:
 
 
     def render_fog(self):   ### draf the shadowmask onto the player position
-        self.fog.fill(Settings.light_grey)
+        self.fog.fill(Settings.grey)
         self.shadow_rect.center = self.player.rect.center
         self.fog.blit(self.shadow_mask ,self.shadow_rect)
         self.game_display.blit(self.fog, (0,0) ,special_flags=pygame.BLEND_MULT)
