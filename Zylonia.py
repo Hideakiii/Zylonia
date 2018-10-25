@@ -75,6 +75,11 @@ class Game:
                     self.player.rect.bottom = lowest.rect.top + 1
                     self.player.vel.y = 0
 
+        for plat in self.platforms:
+            if plat.rect.x <= -150:
+                plat.rect.x = random.randint(Settings.WIDTH + 150 , Settings.WIDTH + 250)
+                plat.rect.y = random.randint(450 ,850)
+
         ## if player reaches the side of the screen 
         if self.player.rect.right >= Settings.WIDTH - 200:
             # Display "E" button

@@ -5,6 +5,7 @@ WIDTH = 1280
 HEIGHT = 720
 FPS = 60
 GAME_TITLE = "Zylonia"
+GESCH = 1
 ## images
 SPRITESHEET = "Sprites_v1.png"
 PLATSHEET = "Flyplatforms_v2.png"
@@ -28,6 +29,10 @@ platform_list = [(WIDTH / 5 - 50 , HEIGHT * 3 / 4),
                  (400 , 350),
                  (900 , 500),
                  (1000 , 600),
+                 (900 , 550),
+                 (800 , 450),
+                 (1100 , 700),
+                 (550 , 600),
                  (600 , 300)]
 platform_list_2 = [(0 ,HEIGHT - 50),
                     (100 ,HEIGHT - 50),
@@ -42,9 +47,9 @@ Flyplat_list = [
                     (500 , 600)]
 
 ## Player Properties
-player_acc = 0.5
+player_acc = 0.4
 player_friction = -0.12
-gravity = 0.5
+gravity = 0.6
 JUMP_POWER = 8
 ## Flying platforms properties
 

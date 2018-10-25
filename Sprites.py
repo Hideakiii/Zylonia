@@ -5,8 +5,12 @@ import math
 import random
 vector = pygame.math.Vector2
 
+clock = pygame.time.Clock()
+milliseconds = clock.tick(Settings.FPS)  # milliseconds passed since last frame
+seconds = milliseconds / 10.0 # seconds passed since last frame (float)
+
 class Spritesheet:
-    # utility class for loading and parsing spritesheets
+    # loading spritesheets
     def __init__(self,filename): 
         self.spritesheet = pygame.image.load(filename).convert_alpha()
 
@@ -32,9 +36,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
         self.vel = vector(0,0)
-        self.clock = pygame.time.Clock()
-        self.milliseconds = self.clock.tick(Settings.FPS)  # milliseconds passed since last frame
-        self.seconds = self.milliseconds / 10.0 # seconds passed since last frame (float)
 
     def load_images(self):
         self.standing_frames = [self.game.spritesheet.get_image(9, 10, 89, 177),
@@ -60,7 +61,7 @@ class Player(pygame.sprite.Sprite):
         collide = pygame.sprite.spritecollide(self, self.game.platforms, False)
         self.rect.x -= 2
         if collide:
-            self.vel.y = -Settings.JUMP_POWER * self.seconds
+            self.vel.y = -Settings.JUMP_POWER * seconds
 
 
     def update(self):
@@ -68,9 +69,9 @@ class Player(pygame.sprite.Sprite):
         self.acc = vector(0, Settings.gravity)
         self.keystate = pygame.key.get_pressed()
         if self.keystate[pygame.K_a]:
-            self.acc.x += -Settings.player_acc * self.seconds
+            self.acc.x += -Settings.player_acc * seconds
         if self.keystate[pygame.K_d]:
-            self.acc.x += Settings.player_acc * self.seconds             ## beschl. x 0 = 0,5
+            self.acc.x += Settings.player_acc * seconds             ## beschl. x 0 = 0,5
 
         self.acc.x += self.vel.x * Settings.player_friction  ## beschl. 0 += gesch. 0 * -0,12
         self.vel += self.acc                    ## gesch. 0 += beschl. 0
@@ -129,6 +130,9 @@ class Platform(pygame.sprite.Sprite):
                             self.game.platsheet.get_image(421,45,251,79)]
         for plat in self.Plat_list:
             plat.set_colorkey(Settings.black)
+
+    def update(self):
+        self.rect.x -= Settings.GESCH * seconds
 
 class Fly_Plat(pygame.sprite.Sprite):
     def __init__(self,x ,y,game):
