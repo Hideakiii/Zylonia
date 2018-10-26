@@ -11,15 +11,8 @@ SPRITESHEET = "Sprites_v1.png"
 PLATSHEET = "Flyplatforms_v2.png"
 
 SHADOW_MASK = "Shadow_mask.png"
-SHADOW_RADIUS = (700 ,700)
+SHADOW_RADIUS = (800 ,700)
 
-## Platforms
-def plat_px():
-    p_x = 0
-    for p_x in range(10):
-        p_x += 100
-        print(p_x)
-        return p_x
         
 platform_list = [(WIDTH / 5 - 50 , HEIGHT * 3 / 4),
                  (0 ,HEIGHT - 50),

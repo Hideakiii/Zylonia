@@ -139,7 +139,7 @@ class Game:
 
     def draw(self):
         ## game loop - draw
-        self.back_display.fill(Settings.grey)
+        self.back_display.fill(Settings.light_grey)
         self.all_sprites.draw(self.game_display)
         self.P_group.draw(self.front_display)
         if self.shadow:
