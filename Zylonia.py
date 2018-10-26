@@ -19,6 +19,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.load_data()
+        self.score = 0
 
     def load_data(self):
         self.dir = path.dirname(__file__)
@@ -33,9 +34,6 @@ class Game:
         self.shadow_mask = pygame.transform.scale(self.shadow_mask, Settings.SHADOW_RADIUS)
         self.shadow_rect = self.shadow_mask.get_rect()
         
-
-            
-
     def new_game(self):
         ## start a new game
         self.all_sprites = pygame.sprite.Group()
@@ -75,10 +73,21 @@ class Game:
                     self.player.rect.bottom = lowest.rect.top + 1
                     self.player.vel.y = 0
 
+        ## löscht/killt Platformen ,die links aus dem Bildschirm hinaus gelangen
         for plat in self.platforms:
-            if plat.rect.x <= -150:
-                plat.rect.x = random.randint(Settings.WIDTH + 150 , Settings.WIDTH + 250)
-                plat.rect.y = random.randint(450 ,800)
+            if plat.rect.x <= -plat.rect.right - 100:
+                plat.kill()
+                self.score += 1
+                Settings.GESCH += 1
+                print("Gesch: " ,Settings.GESCH)
+                print("Score: " ,self.score)
+
+        ## lässt immer 25 Platformen auf dem Bildschirm erscheinen      
+        while len(self.platforms) < 25:
+            height = random.randrange(450 ,700)
+            p = Platform(random.randrange(Settings.WIDTH + 50 ,Settings.WIDTH +350),height,game)
+            self.platforms.add(p)
+            self.all_sprites.add(p)
 
         ## if player reaches the side of the screen 
         if self.player.rect.right >= Settings.WIDTH - 200:
@@ -98,7 +107,6 @@ class Game:
                     self.platforms.add(p)
        
             #next_scene()
-
 
     def render_fog(self):   ### draf the shadowmask onto the player position
         self.fog.fill(Settings.grey)
@@ -120,9 +128,14 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.player.jump()
-            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_n:
                     self.shadow = not self.shadow
+
+                if event.key == pygame.K_t:         #### Aus/Ein-schaltung der Gravität
+                    if Settings.gravity == 0:
+                        Settings.gravity = 60
+                    else:   
+                        Settings.gravity = 0
 
     def draw(self):
         ## game loop - draw

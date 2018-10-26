@@ -7,7 +7,7 @@ vector = pygame.math.Vector2
 
 clock = pygame.time.Clock()
 milliseconds = clock.tick(Settings.FPS)  # milliseconds passed since last frame
-seconds = milliseconds / 10.0 # seconds passed since last frame (float)
+seconds = milliseconds / 1000.0 # seconds passed since last frame (float)
 
 class Spritesheet:
     # loading spritesheets
@@ -63,17 +63,16 @@ class Player(pygame.sprite.Sprite):
         if collide:
             self.vel.y = -Settings.JUMP_POWER * seconds
 
-
     def update(self):
         self.animate()
-        self.acc = vector(0, Settings.gravity)
+        self.acc = vector(0, Settings.gravity * seconds)
         self.keystate = pygame.key.get_pressed()
         if self.keystate[pygame.K_a]:
             self.acc.x += -Settings.player_acc * seconds
         if self.keystate[pygame.K_d]:
             self.acc.x += Settings.player_acc * seconds             ## beschl. x 0 = 0,5
 
-        self.acc.x += self.vel.x * Settings.player_friction  ## beschl. 0 += gesch. 0 * -0,12
+        self.acc.x += self.vel.x * Settings.player_friction * seconds  ## beschl. 0 += gesch. 0 * -0,12
         self.vel += self.acc                    ## gesch. 0 += beschl. 0
         self.rect.move_ip(self.vel)
 
