@@ -27,6 +27,7 @@ class Game:
         # load spritesheet image
         self.spritesheet = Spritesheet(path.join(img_dir,Settings.SPRITESHEET))
         self.platsheet = Spritesheet(path.join(img_dir,Settings.PLATSHEET))
+        self.backsheet = Spritesheet(path.join(img_dir,Settings.BACKSHEET))
         ## shadow effect
         self.fog = pygame.Surface((Settings.WIDTH ,Settings.HEIGHT))
         self.fog.fill(Settings.light_grey)
@@ -36,16 +37,21 @@ class Game:
         
     def new_game(self):
         ## start a new game
+        self.background = Background(game)
+        self.BG = pygame.sprite.Group()
+        self.BG.add(self.background)
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
         self.player = Player(100,250, game)    
         self.P_group = pygame.sprite.Group()
-        self.P_group.add(self.player)     
+        self.P_group.add(self.player) 
+        self.all_sprites.add(self.background)    
         for plat in Settings.platform_list:
             p = Platform(*plat ,game)
             self.all_sprites.add(p)
             self.platforms.add(p)
         self.all_sprites.add(self.player) 
+        self.all_sprites.add(self.background)
         self.shadow = True     ### To toggle the shadow_mask on/off
         self.run()
 
@@ -60,8 +66,10 @@ class Game:
 
     def update(self):
         ## game loop - update
-        self.all_sprites.update()
-        
+        self.all_sprites.update() 
+        if self.player.rect.y >= Settings.HEIGHT:
+            #dead()
+            pass
         if self.player.vel.y > 0:
             collide = pygame.sprite.spritecollide(self.player ,self.platforms ,False)
             if collide:
@@ -72,6 +80,8 @@ class Game:
                 if self.player.rect.bottom < lowest.rect.bottom:
                     self.player.rect.bottom = lowest.rect.top + 1
                     self.player.vel.y = 0
+                    for plat in self.platforms:
+                        self.player.vel.x -= Settings.GESCH / 60 * seconds
 
         ## löscht/killt Platformen ,die links aus dem Bildschirm hinaus gelangen
         for plat in self.platforms:
@@ -79,13 +89,12 @@ class Game:
                 plat.kill()
                 self.score += 1
                 Settings.GESCH += 1
-                print("Gesch: " ,Settings.GESCH)
                 print("Score: " ,self.score)
 
         ## lässt immer 25 Platformen auf dem Bildschirm erscheinen      
         while len(self.platforms) < 25:
             height = random.randrange(450 ,700)
-            p = Platform(random.randrange(Settings.WIDTH + 50 ,Settings.WIDTH +350),height,game)
+            p = Platform(random.randrange(Settings.WIDTH + 50 ,Settings.WIDTH + 450),height,game)
             self.platforms.add(p)
             self.all_sprites.add(p)
 
@@ -139,7 +148,8 @@ class Game:
 
     def draw(self):
         ## game loop - draw
-        self.back_display.fill(Settings.light_grey)
+        self.back_display.fill(Settings.grey)
+        self.BG.draw(self.back_display)
         self.all_sprites.draw(self.game_display)
         self.P_group.draw(self.front_display)
         if self.shadow:

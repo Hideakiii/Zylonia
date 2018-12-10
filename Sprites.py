@@ -9,6 +9,7 @@ clock = pygame.time.Clock()
 milliseconds = clock.tick(Settings.FPS)  # milliseconds passed since last frame
 seconds = milliseconds / 1000.0 # seconds passed since last frame (float)
 
+
 class Spritesheet:
     # loading spritesheets
     def __init__(self,filename): 
@@ -70,7 +71,7 @@ class Player(pygame.sprite.Sprite):
         if self.keystate[pygame.K_a]:
             self.acc.x += -Settings.player_acc * seconds
         if self.keystate[pygame.K_d]:
-            self.acc.x += Settings.player_acc * seconds             ## beschl. x 0 = 0,5
+            self.acc.x += Settings.player_acc * seconds   ## beschl. x 0 = 0,5
 
         self.acc.x += self.vel.x * Settings.player_friction * seconds  ## beschl. 0 += gesch. 0 * -0,12
         self.vel += self.acc                    ## gesch. 0 += beschl. 0
@@ -124,14 +125,42 @@ class Platform(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
     def load_images(self,game):
         self.Plat_list = [self.game.platsheet.get_image(26,39,362,189),
                             self.game.platsheet.get_image(421,45,251,79)]
+
         for plat in self.Plat_list:
             plat.set_colorkey(Settings.black)
 
-    def update(self):
+    def Scroll(self):
         self.rect.x -= Settings.GESCH * seconds
+
+    def update(self):
+        self.Scroll()
+
+
+class Background(pygame.sprite.Sprite):
+    def __init__(self, game):
+        pygame.sprite.Sprite.__init__(self)
+        self.game = game
+        self.load_images(game)
+        self.image = self.Back_list[0]
+        self.rect = self.image.get_rect()
+        self.rect.x = 0
+        self.rect.y = 0
+
+    def load_images(self,game):
+        self.Back_list = [self.game.platsheet.get_image(0,0,1920,1080)]
+        for back in self.Back_list:
+            back.set_colorkey(Settings.black)
+
+    def Scroll(self):
+        self.rect.x -= Settings.GESCH * seconds
+
+    def update(self):
+        self.Scroll()
+
 
 class Fly_Plat(pygame.sprite.Sprite):
     def __init__(self,x ,y,game):
