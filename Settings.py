@@ -9,7 +9,7 @@ GESCH = 100
 ## images
 SPRITESHEET = "Sprites_v1.png"
 PLATSHEET = "Flyplatforms_v2.png"
-BACKSHEET = "martin-vallin-bakgrund-lvl5a.jpg"
+BACKSHEET = "martin-vallin-bakgrund-lvl5a.jpg"  ###  All background images are from: https://www.artstation.com/artwork/Lb8xK
 
 SHADOW_MASK = "Shadow_mask.png"
 SHADOW_RADIUS = (800 ,700)

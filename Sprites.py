@@ -146,12 +146,13 @@ class Background(pygame.sprite.Sprite):
         self.game = game
         self.load_images(game)
         self.image = self.Back_list[0]
+        ##self.image.transform.scale(image ,(720,1280))
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.rect.y = 0
 
     def load_images(self,game):
-        self.Back_list = [self.game.platsheet.get_image(0,0,1920,1080)]
+        self.Back_list = [self.game.backsheet.get_image(0,0,1920,1080).convert_alpha()]
         for back in self.Back_list:
             back.set_colorkey(Settings.black)
 

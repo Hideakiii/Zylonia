@@ -154,7 +154,7 @@ class Game:
         self.P_group.draw(self.front_display)
         if self.shadow:
             self.render_fog()
-
+        
         pygame.display.flip()
 
     def Start_Screen(self):
