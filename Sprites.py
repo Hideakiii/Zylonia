@@ -155,6 +155,7 @@ class Background(pygame.sprite.Sprite):
         self.Back_list = [self.game.backsheet.get_image(0,0,1920,1080).convert_alpha()]
         for back in self.Back_list:
             back.set_colorkey(Settings.black)
+            back = pygamec.transform.scale(bak ,(1920,1080))
 
     def Scroll(self):
         self.rect.x -= Settings.GESCH * seconds
